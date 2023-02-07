@@ -13,11 +13,11 @@ firstYear = 2007
 lastYear = 2018
 
 
-# copy bbsBayes2 model file to directory
-
-copy_model_file(model = model,
-                model_variant = model_variant,
-                dir = "models")
+# # copy bbsBayes2 model file to directory
+# # only done once, not necessary to repeat
+# copy_model_file(model = model,
+#                 model_variant = model_variant,
+#                 dir = "models")
 
 ### The above exported Stan file was modified manually
 ### to remove or quote-out all uses of the yeareffects parameters
