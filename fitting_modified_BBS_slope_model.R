@@ -78,7 +78,9 @@ pm <- prepare_model(ps,
 
 fit <- run_model(pm,
                  refresh = 200,
-                 max_treedepth = 13, #
+                 iter_warmup = 1500,
+                 iter_sampling = 2000,
+                 max_treedepth = 14, #
                  adapt_delta = 0.8,#initial try with defaults
                  output_dir = "output",
                  output_basename = paste(species,stratification,model,model_variant,sep = "_"))
@@ -101,20 +103,21 @@ for(species in sps_to_run){
   #bbsBayes2 saves full cmdstanr fit object in 
   # rds file
   
-  bbsBayes2_fit <- readRDS(paste0("output/",
-                                  paste(species,stratification,model,model_variant,sep = "_"),
-                                  ".rds"))
-  
-  # this is the CmdStanMCMC fit object
-  stanfit <- bbsBayes2_fit$model_fit
-  
-  # the rest of the bbsBayes2_fit object is the data
-  # spatial information, etc.
-  
+  # bbsBayes2_fit <- readRDS(paste0("output/",
+  #                                 paste(species,stratification,model,model_variant,sep = "_"),
+  #                                 ".rds"))
+  # 
+  # # this is the CmdStanMCMC fit object
+  # stanfit <- bbsBayes2_fit$model_fit
+  # 
+  # # the rest of the bbsBayes2_fit object is the data
+  # # spatial information, etc.
+  # 
   
   ## cmdstanr$summary() object
   summ <- readRDS(file = paste0("output/",paste(species,stratification,model,model_variant,sep = "_"),"param_summ.rds"))
   
+  print(max(summ$rhat,na.rm = TRUE))
 }
 
 
