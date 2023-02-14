@@ -102,7 +102,7 @@ parameters {
 
   real eta; //first-year effect
 
-//  matrix[n_strata,n_years] yeareffect_raw; // year effects within each strata
+////  matrix[n_strata,n_years] yeareffect_raw; // year effects within each strata
 
   vector[n_observers] obs_raw;    // observer effects
   vector[n_sites] ste_raw;   // site (route) effects
