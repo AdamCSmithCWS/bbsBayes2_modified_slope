@@ -92,6 +92,11 @@ fit <- run_model(pm,
 # this is a wrapper around stanfit$summary()
 summ <- get_summary(fit) #full parameter summary including convergence diagnostics
 saveRDS(summ,file = paste0("output/",paste(species,stratification,model,model_variant,sep = "_"),"param_summ.rds"))
+
+if(max(summ$rhat,na.rm = TRUE) > 1.05){
+  stop(paste("Rhat is too high", max(summ$rhat,na.rm = TRUE)))
+}
+
 }
 
 
@@ -103,10 +108,20 @@ for(species in sps_to_run){
   #bbsBayes2 saves full cmdstanr fit object in 
   # rds file
   
-  # bbsBayes2_fit <- readRDS(paste0("output/",
-  #                                 paste(species,stratification,model,model_variant,sep = "_"),
-  #                                 ".rds"))
-  # 
+  bbsBayes2_fit <- readRDS(paste0("output/",
+                                  paste(species,stratification,model,model_variant,sep = "_"),
+                                  ".rds"))
+
+  
+  inds <- generate_indices(bbsBayes2_fit,
+                           alternate_n = "n")
+  
+  trends <- generate_trends(inds)
+  
+  map <- plot_map(trends)
+  
+  print(map)
+  
   # # this is the CmdStanMCMC fit object
   # stanfit <- bbsBayes2_fit$model_fit
   # 
